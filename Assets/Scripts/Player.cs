@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     [Tooltip("In ms")][SerializeField] float xSpeed = 10f;
     [SerializeField] float positionPitchFactor = -5f;
     float xThrow, yThrow;
+
+    bool isControlEnabled = true;
     void Start()
     {
         
@@ -18,8 +20,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ProcessTranslation();
-        ProcessRotation();
+        if (isControlEnabled)
+        {
+            ProcessTranslation();
+            ProcessRotation();
+        }
+
     }
 
     private void ProcessRotation()
@@ -29,6 +35,7 @@ public class Player : MonoBehaviour
         float roll = xThrow * -20f;
         transform.localRotation = Quaternion.Euler(pitch, yaw, roll);
     }
+
 
     private void ProcessTranslation()
     {
@@ -41,5 +48,10 @@ public class Player : MonoBehaviour
         float raNewXPos = Mathf.Clamp(transform.localPosition.x + xOffset, -6f, 6f);
         float raNewYPos = Mathf.Clamp(transform.localPosition.y + yOffset, -3f, 3f);
         transform.localPosition = new Vector3(raNewXPos, raNewYPos, transform.localPosition.z);
+    }
+
+    void OnPlayerDeath()
+    {
+        isControlEnabled = false;
     }
 }
