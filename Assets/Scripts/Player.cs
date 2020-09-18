@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     [Tooltip("In ms")][SerializeField] float xSpeed = 10f;
     [SerializeField] float positionPitchFactor = -5f;
+    [SerializeField] GameObject[] guns=null;
     float xThrow, yThrow;
 
     bool isControlEnabled = true;
@@ -24,8 +25,27 @@ public class Player : MonoBehaviour
         {
             ProcessTranslation();
             ProcessRotation();
+            ProcessFiring();
         }
 
+    }
+
+    private void ProcessFiring()
+    {
+        if (CrossPlatformInputManager.GetButton("Fire"))
+        {
+            foreach(GameObject gun in guns)
+            {
+                gun.SetActive(true);
+            }
+        }
+        else
+        {
+            foreach (GameObject gun in guns)
+            {
+                gun.SetActive(false);
+            }
+        }
     }
 
     private void ProcessRotation()

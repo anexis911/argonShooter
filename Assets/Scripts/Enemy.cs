@@ -7,8 +7,9 @@ public class Enemy : MonoBehaviour
 {
 
     [SerializeField] GameObject blowFX = null;
-    [SerializeField] Transform parent;
+    [SerializeField] Transform parent=null;
     [SerializeField] int scoreForHit = 10;
+    [SerializeField] int hits = 3;
     ScoreBoard scoreBoard;
     private void Start()
     {
@@ -24,10 +25,17 @@ public class Enemy : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        GameObject blowf =  Instantiate(blowFX, transform.position, Quaternion.identity);
-        blowf.transform.parent = parent;
+
+        hits--;
         scoreBoard.ScoreHit(scoreForHit);
-        scoreBoard.MakeNewScore();
-        Destroy(gameObject);
+        if (hits <= 0)
+        {
+            GameObject blowf = Instantiate(blowFX, transform.position, Quaternion.identity);
+            blowf.transform.parent = parent;
+
+            Destroy(gameObject);
+        }
+        
+
     }
 }
