@@ -13,7 +13,7 @@ public class CollisionHandler : MonoBehaviour
         Debug.Log("Collided"+ other.gameObject.name);
         StartDeathSequence();
         deathFX.SetActive(true);
-        //Invoke("ReloadScene", timeOfReloadLvl);
+        Invoke("ReloadScene", timeOfReloadLvl);
 
     }
 
@@ -21,7 +21,7 @@ public class CollisionHandler : MonoBehaviour
     {
         
         
-        //SendMessage("OnPlayerDeath");
+        SendMessage("OnPlayerDeath");
     }
     private void ReloadScene()
     {
